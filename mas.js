@@ -1,5 +1,6 @@
 /**
- * @param {array[object]} optionsArr - array of options objects
+ * @param {Array.<{key:string, url: string, title:string, width:string, maxSuggestions:number}>} optionsArr 
+ * - array of options objects
  * @description - must pass path to json file (or object) and template and width and height for the drop-downs
  */
 $.fn.multiAutoSuggest = function (optionsArr) {
