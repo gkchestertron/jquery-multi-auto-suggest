@@ -87,7 +87,9 @@ property you want to autoSuggest from?');
                 return a < b ? -1 : a > b ? 1 : 0;
         });
 
-        var suggestionsHtml = '<ul>' + $.map(suggestions, function (suggestion) {
+        var suggestionsHtml = options.title ? '<h4>'+options.title+'</h4><hr />' : '';
+
+        suggestionsHtml += '<ul>' + $.map(suggestions, function (suggestion) {
             return '<li>' + suggestion + '</li>';
         }).slice(0, options.maxSuggestions).join('') + '</ul>';
 
