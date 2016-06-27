@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>index</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script   src="https://code.jquery.com/jquery-1.12.4.min.js"   integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="   crossorigin="anonymous"></script>
+        <script src="mas.js"></script>
+        <link rel="stylesheet" type="text/css" href="mas.css">
+	</head>
+	<body>
+        <input placeholder="type some stuff" />
+        <script type="text/javascript">
+            $('input').multiAutoSuggest([{url: 'names.json', key: 'ResourceName' }, {url:'needs.json', key: 'Name'}]);
+        </script>
+	</body>
+</html>
