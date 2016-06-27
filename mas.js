@@ -1,5 +1,5 @@
 /**
- * @param {Array.<{key:string, url: string, title:string, width:string, maxSuggestions:number}>} optionsArr 
+ * @param {Array.<{data:object[], key:string, url: string, title:string, width:string, maxSuggestions:number}>} optionsArr 
  * - array of options objects
  * @description - must pass path to json file (or object) and template and width and height for the drop-downs
  */
@@ -10,14 +10,17 @@ $.fn.multiAutoSuggest = function (optionsArr) {
     if (!Array.isArray(optionsArr))
         throw new Error('$.fn.multiAutoSuggest requires an array of options objects');
 
-    $.each(optionsArr, function (idx, options) {
-        $.ajax({
-            url: options.url,
-            success: function (data) {
-                buildAutoSuggest(data, options);
-            }
+    if (options.data)
+        buildAutoSuggest(data, options);
+    else
+        $.each(optionsArr, function (idx, options) {
+            $.ajax({
+                url: options.url,
+                success: function (data) {
+                    buildAutoSuggest(data, options);
+                }
+            });
         });
-    });
 
     function buildAutoSuggest(data, options) {
         if (!options.key) {
