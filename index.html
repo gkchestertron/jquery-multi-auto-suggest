@@ -10,7 +10,18 @@
 	<body>
         <input placeholder="type some stuff" />
         <script type="text/javascript">
-            $('input').multiAutoSuggest([{title: 'Resources', url: 'names.json', key: 'ResourceName' }, {title: 'Needs', url:'needs.json', key: 'Name'}]);
+            $('input').multiAutoSuggest([
+                {
+                    title: 'Resources', 
+                    url: 'names.json', 
+                    key: 'ResourceName' 
+                }, 
+                {
+                    title: 'Needs', 
+                    url:'needs.json', 
+                    key: 'Name'
+                }
+            ]);
         </script>
 	</body>
 </html>

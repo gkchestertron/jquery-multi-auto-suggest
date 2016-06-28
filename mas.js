@@ -10,16 +10,17 @@ $.fn.multiAutoSuggest = function (optionsArr) {
     if (!Array.isArray(optionsArr))
         throw new Error('$.fn.multiAutoSuggest requires an array of options objects');
 
-    if (options.data)
-        buildAutoSuggest(data, options);
     else
         $.each(optionsArr, function (idx, options) {
-            $.ajax({
-                url: options.url,
-                success: function (data) {
-                    buildAutoSuggest(data, options);
-                }
-            });
+            if (options.data)
+                buildAutoSuggest(data, options);
+            else
+                $.ajax({
+                    url: options.url,
+                    success: function (data) {
+                        buildAutoSuggest(data, options);
+                    }
+                });
         });
 
     function buildAutoSuggest(data, options) {
