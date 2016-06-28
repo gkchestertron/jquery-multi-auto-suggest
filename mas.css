@@ -4,6 +4,7 @@
     float: left;
     min-height: 20px;
     padding: 10px;
+    width: 300px;
 }
 
 .multi-auto-suggest h4 {
@@ -15,4 +16,10 @@
     list-style-type: none;
     margin: 0px;
     padding: 0px;
+}
+
+@media only screen and (max-width: 640px) {
+    .multi-auto-suggest div {
+        width: 100%;
+    }
 }

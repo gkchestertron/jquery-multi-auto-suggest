@@ -9,7 +9,6 @@ $.fn.multiAutoSuggest = function (optionsArr) {
 
     if (!Array.isArray(optionsArr))
         throw new Error('$.fn.multiAutoSuggest requires an array of options objects');
-
     else
         $.each(optionsArr, function (idx, options) {
             if (options.data)
@@ -24,18 +23,16 @@ $.fn.multiAutoSuggest = function (optionsArr) {
         });
 
     function buildAutoSuggest(data, options) {
-        if (!options.key) {
+        if (!options.key)
             throw new Error('You did not supply a key - what is the name of the \
 property you want to autoSuggest from?');
-        }
-
-        options.width = options.width || '300px';
-        options.maxSuggestions = options.maxSuggestions || 10;
 
         var dictionary = $.map(data, function (el, idx) {
             return el[options.key];
         }),
-        suggestionDiv = $('<div style="width: '+options.width+';">');
+        suggestionDiv = options.width ? $('<div style="width: '+options.width+';">') : $('<div>');
+
+        options.maxSuggestions = options.maxSuggestions || 10;
 
         suggestionsDiv.append(suggestionDiv);
 
