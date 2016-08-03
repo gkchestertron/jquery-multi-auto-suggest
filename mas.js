@@ -12,7 +12,7 @@ $.fn.multiAutoSuggest = function (optionsArr) {
     else
         $.each(optionsArr, function (idx, options) {
             if (options.data)
-                buildAutoSuggest(data, options);
+                buildAutoSuggest(options.data, options);
             else
                 $.ajax({
                     url: options.url,
@@ -22,15 +22,27 @@ $.fn.multiAutoSuggest = function (optionsArr) {
                 });
         });
 
+    // add suggest function to dom element
+    this[0].suggest = function (suggestions) {
+        if (!Array.isArray(suggestions[0]))
+            suggestions = [suggestions];
+
+        for (var i in suggestions)
+            autoSuggest('', suggestions[i], $(suggestionsDiv.find('div')[i]), optionsArr[i]);
+
+        suggestionsDiv.show();
+    };
+
     function buildAutoSuggest(data, options) {
-        if (!options.key)
+        if (!options.key && options.url)
             throw new Error('You did not supply a key - what is the name of the \
 property you want to autoSuggest from?');
 
-        var dictionary = $.map(data, function (el, idx) {
+        var dictionary = !options.key ? data : $.map(data, function (el, idx) {
             return el[options.key];
         }),
-        suggestionDiv = options.width ? $('<div style="width: '+options.width+';">') : $('<div>');
+        suggestionDiv = options.width ? $('<div style="width: '+options.width+';">') : $('<div>'),
+        min = options.minChars || 3;
 
         options.maxSuggestions = options.maxSuggestions || 10;
 
@@ -40,11 +52,11 @@ property you want to autoSuggest from?');
             var val = self.val(),
                 suggestions;
 
-            if (val.length < 3 || val.length > 10)
+            if (val.length < min || val.length > 10)
                 return suggestionsDiv.hide();
 
             if (!options.prevVal 
-            || options.prevVal.slice(0, 3) !== val.slice(0, 3)) {
+            || options.prevVal.slice(0, min) !== val.slice(0, min)) {
                 suggestions = options.suggestions = $.grep(dictionary, function (word) {
                     var re = new RegExp(val, 'i');
                     return re.test(word);
@@ -66,14 +78,24 @@ property you want to autoSuggest from?');
 
         suggestionDiv.on('click', 'li', function (event) {
             var $li = $(event.currentTarget);
+
             self.val($li.text());
+            self.trigger('autocomplete');
+            suggestionsDiv.hide();
+        });
+
+        self.on('click', function (event) {
+            event.stopPropagation();
+        });
+
+        $('body').on('click', function () {
             suggestionsDiv.hide();
         });
     }
 
     function autoSuggest(val, suggestions, suggestionDiv, options) {
         suggestions.sort(function (a, b) {
-            var val0 = val[0].toLowerCase();
+            var val0 = val && val[0].toLowerCase() || '';
 
             a = a.toLowerCase();
             b = b.toLowerCase();

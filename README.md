@@ -12,7 +12,8 @@ $('input').multiAutoSuggest([
     {
         title: 'Needs', 
         url:'needs.json', 
-        key: 'Name'
+        key: 'Name',
+        maxSuggestions: 1000
     }
 ]);
 ```
