@@ -84,9 +84,12 @@ property you want to autoSuggest from?');
             suggestionsDiv.show();
         });
 
-        suggestionDiv.on('click', 'li', function (event) {
+        suggestionDiv.on('click', 'li > ul > li, li', function (event) {
             var $li = $(event.currentTarget);
 
+            event.stopPropagation();
+
+            $li.find('ul').remove();
             self.val($li.text());
             self.trigger('autocomplete');
             suggestionsDiv.hide();
