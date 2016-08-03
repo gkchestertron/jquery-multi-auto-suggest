@@ -12,14 +12,15 @@
         <script type="text/javascript">
             $('input').multiAutoSuggest([
                 {
-                    title: 'Resources', 
-                    url: 'names.json', 
-                    key: 'ResourceName' 
-                }, 
-                {
                     title: 'Needs', 
                     url:'needs.json', 
                     key: 'Name'
+                },
+                {
+                    title: 'Providers', 
+                    url: 'names.json', 
+                    key: 'ResourceName', 
+                    childKey: 'ParentAgencyName'
                 }
             ]);
         </script>

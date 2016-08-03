@@ -18,6 +18,11 @@
     padding: 0px;
 }
 
+.multi-auto-suggest ul > li > ul {
+    margin-left: 10px;
+    font-style: italic;
+}
+
 @media only screen and (max-width: 640px) {
     .multi-auto-suggest div {
         width: 100%;

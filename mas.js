@@ -39,20 +39,28 @@ $.fn.multiAutoSuggest = function (optionsArr) {
 property you want to autoSuggest from?');
 
         var dictionary = !options.key ? data : $.map(data, function (el, idx) {
-            return el[options.key];
-        }),
-        suggestionDiv = options.width ? $('<div style="width: '+options.width+';">') : $('<div>'),
-        min = options.minChars || 3;
+                var suggestion =  el[options.key];
+                if (options.childKey) {
+                    var children = el[options.childKey];
+                    if (children && !Array.isArray(children)) {
+                        children = [children];
+                        suggestion += ' <ul><li>'+children.join('</li><li>')+'</li></ul>';
+                    }
+                }
+                return suggestion;
+            }),
+            suggestionDiv = options.width ? $('<div style="width: '+options.width+';">') : $('<div>'),
+            min = options.minChars || 3;
 
         options.maxSuggestions = options.maxSuggestions || 10;
 
         suggestionsDiv.append(suggestionDiv);
 
         self.on('keyup', function (event) {
-            var val = self.val(),
+            var val = '\\b'+self.val().split('.').join('\\.'),
                 suggestions;
 
-            if (val.length < min || val.length > 10)
+            if (val.length < min)
                 return suggestionsDiv.hide();
 
             if (!options.prevVal 
